@@ -17,6 +17,10 @@ Le championnat français de football, Ligue 1, est l'une des compétitions les p
 - Offrir une expérience utilisateur fluide et intuitive sur tous les supports (web, mobile).
 
 
+### 1.3 Contraintes
+- Accées limités aux differentes API football, ceci est nottament dû au fait que la plupart des API sont payantes.
+- 100 Reqûetes par jour pour 4 personnes.
+
 
 ## 2. Description des Fonctionnalités
 

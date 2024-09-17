@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #0a3d62;
+    color: white;
+    padding: 15px;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+nav {
+    display: inline-block;
+    float: right;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 16px;
+}
+
+.hero {
+    background: url('https://example.com/stade.jpg') no-repeat center center/cover;
+    height: 400px;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: black;
+}
+
+.news {
+    padding: 20px;
+    background-color: white;
+}
+
+.news h2 {
+    text-align: center;
+    color: #0a3d62;
+}
+
+.articles {
+    display: flex;
+    justify-content: space-around;
+}
+
+.article {
+    background-color: #f4f4f4;
+    padding: 15px;
+    width: 30%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.article img {
+    width: 100%;
+}
+
+.live-scores {
+    padding: 20px;
+    background-color: #0a3d62;
+    color: white;
+    text-align: center;
+}
+
+.live-scores h2 {
+    color: white;
+}
+
+.matches {
+    display: flex;
+    justify-content: space-around;
+}
+
+.match {
+    background-color: #3c6382;
+    padding: 15px;
+    width: 30%;
+}
+
+footer {
+    background-color: #0a3d62;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
