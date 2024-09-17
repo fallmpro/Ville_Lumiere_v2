@@ -39,13 +39,6 @@ Le championnat français de football, Ligue 1, est l'une des compétitions les p
 
 
 
-### 2.4 Fonctionnalités Utilisateur
-- **--**
-- **--**
-- **--**
-- **--**
-
-
 ## 3. Architecture Technique
 
 ### 3.1 Frontend
