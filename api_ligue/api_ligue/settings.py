@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'api_ligue.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'football_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'NAME': 'villelumiere_bdd',
+        'USER': '387019',
+        'PASSWORD': 'VilleV295*',
+        'HOST': 'mysql-villelumiere.alwaysdata.net',
         'PORT': '3306',
     }
 }
