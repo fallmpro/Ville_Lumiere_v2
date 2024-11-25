@@ -5,6 +5,12 @@
 
 ![Mon image](./img/charte.jpg)
 
+
+[Lien du Trello](https://trello.com/invite/b/66d57437756fb643c0a3293b/ATTI540b7761f6618555667af0cad6c02056458CA623/projet-api-ligue-1)
+
+
+![Mon image](./img/trello.png)
+
 ### 1.1 Contexte
 Le championnat français de football, Ligue 1, est l'une des compétitions les plus suivies dans le monde du sport. Ce projet vise à créer une plateforme d'information dédiée à la Ligue 1 pour offrir aux fans, journalistes, et analystes un accès rapide et complet aux données et actualités du championnat.
 
