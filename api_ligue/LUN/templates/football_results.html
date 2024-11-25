@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats des matchs</title>
+</head>
+<body>
+    <h1>Résultats des matchs de football</h1>
+
+    {% if matches %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Équipe à domicile</th>
+                    <th>Score à domicile</th>
+                    <th>Score à l'extérieur</th>
+                    <th>Équipe à l'extérieur</th>
+                    <th>Date du match</th>
+                    <th>Stade</th>
+                    <th>Arbitre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                    <tr>
+                        <td><img src="{{ match.teams.home.logo }}" alt="{{ match.teams.home.name }}" width="30"> {{ match.teams.home.name }}</td>
+                        <td>{{ match.goals.home }}</td>
+                        <td>{{ match.goals.away }}</td>
+                        <td><img src="{{ match.teams.away.logo }}" alt="{{ match.teams.away.name }}" width="30"> {{ match.teams.away.name }}</td>
+                        <td>{{ match.fixture.date }}</td>
+                        <td>{{ match.fixture.venue.name }}</td>
+                        <td>{{ match.fixture.referee }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun match trouvé.</p>
+    {% endif %}
+</body>
+</html>
