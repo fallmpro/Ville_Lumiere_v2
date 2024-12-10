@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Football Info - Équipes</title>
+    <link rel="stylesheet" href="home.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- En-tête -->
+    <header>
+      <div class="logo">Football Info</div>
+      <nav>
+        <a href="#">Actualités</a>
+        <a href="#">Compétitions</a>
+        <a href="#">Scores en direct</a>
+        <a href="equipes.html">Équipes</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Section principale -->
+    <div id="teams">
+      <h1>Découvrez les Équipes</h1>
+      <!-- Barre de recherche -->
+      <div class="search-bar">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Recherchez une équipe..."
+        />
+        <button id="search-button">Rechercher</button>
+      </div>
+
+      <!-- Liste des équipes -->
+      <div id="team-list" class="team-list">
+        <!-- Les équipes seront injectées dynamiquement -->
+      </div>
+    </div>
+
+   
+
+    <script src="equipes.js"></script>
+  </body>
+</html>

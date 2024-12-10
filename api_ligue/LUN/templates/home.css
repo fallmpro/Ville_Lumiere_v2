@@ -1,12 +1,15 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Antonio", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
 header {
-    background-color: #0a3d62;
+    background-color: #5271FF;
     color: white;
     padding: 15px;
 }
@@ -17,9 +20,15 @@ header .logo {
     display: inline-block;
 }
 
+
+/* .logo{
+margin-right: 2%;
+} */
+
+
 nav {
     display: inline-block;
-    float: right;
+    /* float: right; */
 }
 
 nav a {
@@ -51,7 +60,7 @@ nav a {
 
 .news h2 {
     text-align: center;
-    color: #0a3d62;
+    color: #5271FF;
 }
 
 .articles {
@@ -66,13 +75,15 @@ nav a {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
+
 .article img {
     width: 100%;
 }
 
 .live-scores {
     padding: 20px;
-    background-color: #0a3d62;
+    background-color: #5271FF;
     color: white;
     text-align: center;
 }
@@ -87,13 +98,13 @@ nav a {
 }
 
 .match {
-    background-color: #3c6382;
+    background-color: #5271FF;
     padding: 15px;
     width: 30%;
 }
 
 footer {
-    background-color: #0a3d62;
+    background-color: #5271FF;
     color: white;
     text-align: center;
     padding: 10px;

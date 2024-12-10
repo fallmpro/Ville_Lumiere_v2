@@ -5,6 +5,14 @@ class Team(models.Model):
 
     def __str__(self):
         return self.team_name
+    
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='team_logos/')
+    description = models.TextField(blank=True)
+
 
 class Match(models.Model):
     home_team = models.ForeignKey(Team, related_name='home_matches', on_delete=models.CASCADE)
@@ -33,3 +41,5 @@ class Ranking(models.Model):
 
     def __str__(self):
         return f"{self.team} - {self.points} pts"
+    
+    
