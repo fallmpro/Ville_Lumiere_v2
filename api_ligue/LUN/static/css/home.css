@@ -21,14 +21,8 @@ header .logo {
 }
 
 
-/* .logo{
-margin-right: 2%;
-} */
-
-
 nav {
     display: inline-block;
-    /* float: right; */
 }
 
 nav a {

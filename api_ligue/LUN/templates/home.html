@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Football Info - Accueil</title>
     <!-- Lien vers le fichier CSS externe -->
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="shortcut icon" href="\Ville_Lumiere_v2\img\logo_SL1.jpg" type="image/x-icon" >
     <link
       href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap"
       rel="stylesheet"
@@ -18,48 +20,36 @@
     <header>
       <div class="logo">Football Info</div>
       <nav>
-        <a href="#">Accueil</a>
+        <a href="{% url 'home' %}">Accueil</a>
         <a href="#">Actualités</a>
         <a href="#">Compétitions</a>
         <a href="#">Scores en direct</a>
-        <a href="equipes.html">Équipes</a>
+        <a href="{% url 'teams' %}">Équipes</a>
         <a href="#">Contact</a>
       </nav>
     </header>
 
     <!-- Section Héros -->
     <div class="hero">
-      <h1>Bienvenue sur Ville Lumiere Info</h1>
+      <h1>Bienvenue sur Ville Lumière Info</h1>
     </div>
 
     <!-- Section Actualités -->
     <section class="news">
       <h2>Dernières Actualités</h2>
       <div class="articles">
+        <!-- Exemple dynamique si vous avez une liste d'actualités dans le contexte -->
+        {% for article in articles %}
         <div class="article">
-          <img src="https://example.com/article1.jpg" alt="Article 1" />
-          <h3>Match de la semaine</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            imperdiet.
-          </p>
+          <img src="{{ article.image_url }}" alt="Article {{ forloop.counter }}" />
+          <h3>{{ article.title }}</h3>
+          <p>{{ article.summary }}</p>
         </div>
-        <div class="article">
-          <img src="https://example.com/article2.jpg" alt="Article 2" />
-          <h3>Les équipes en forme</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            imperdiet.
-          </p>
-        </div>
-        <div class="article">
-          <img src="https://example.com/article3.jpg" alt="Article 3" />
-          <h3>Meilleurs buteurs</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            imperdiet.
-          </p>
-        </div>
+        {% endfor %}
+        <!-- Si aucun article disponible -->
+        {% if not articles %}
+        <p>Aucune actualité pour le moment.</p>
+        {% endif %}
       </div>
     </section>
 
@@ -67,24 +57,20 @@
     <section class="live-scores">
       <h2>Scores en Direct</h2>
       <div class="matches">
+        {% for match in matches %}
         <div class="match">
-          <h3>Équipe A vs Équipe B</h3>
-          <p>Score: 2 - 1</p>
+          <h3>{{ match.home_team }} vs {{ match.away_team }}</h3>
+          <p>Score: {{ match.home_team_goals }} - {{ match.away_team_goals }}</p>
         </div>
-        <div class="match">
-          <h3>Équipe C vs Équipe D</h3>
-          <p>Score: 0 - 3</p>
-        </div>
-        <div class="match">
-          <h3>Équipe E vs Équipe F</h3>
-          <p>Score: 1 - 1</p>
-        </div>
+        {% endfor %}
+        {% if not matches %}
+        <p>Aucun match en cours pour le moment.</p>
+        {% endif %}
       </div>
     </section>
 
     <!-- Pied de page -->
     <footer>
-      <p>&copy; 2024 Football Info. Tous droits réservés.</p>
     </footer>
   </body>
 </html>
