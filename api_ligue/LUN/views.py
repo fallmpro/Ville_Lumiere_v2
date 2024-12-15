@@ -1,7 +1,9 @@
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from .models import Team, Match, Ranking
+from .forms import SignUpForm
 import requests
 
 
@@ -144,3 +146,36 @@ def get_teams(request):
         return render(request, 'teams.html', {'teams': teams})
     else:
         return HttpResponse("Erreur lors de la récupération des équipes.", status=500)
+
+
+# Vue pour l'inscription
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()  # Crée l'utilisateur
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)  # Authentifie l'utilisateur
+            login(request, user)  # Connecte l'utilisateur automatiquement
+            return redirect('home')  # Redirige vers la page d'accueil
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
+# Vue pour la connexion
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)  # Connecte l'utilisateur
+            return redirect('home')  # Redirige vers la page d'accueil
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+# Vue pour la déconnexion
+def logout_view(request):
+    logout(request)  # Déconnecte l'utilisateur
+    return redirect('home')

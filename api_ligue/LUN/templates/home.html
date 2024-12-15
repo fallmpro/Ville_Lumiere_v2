@@ -21,11 +21,9 @@
       <div class="logo">Football Info</div>
       <nav>
         <a href="{% url 'home' %}">Accueil</a>
-        <a href="#">Actualités</a>
         <!-- <a href="#">Compétitions</a> -->
         <!-- <a href="#">Scores en direct</a> -->
         <a href="{% url 'teams' %}">Équipes</a>
-        <a href="#">Contact</a>
       </nav>
     </header>
 
@@ -53,52 +51,7 @@
       </div>
     </section>
 
-     <!-- En-tête -->
-     <!-- <header>
-      <h1>Classement des Équipes</h1>
-    </header> -->
-
-    <!-- Section Classement
-    <section class="ranking">
-      <table>
-        <thead>
-          <tr>
-            <th>Position</th>
-            <th>Équipe</th>
-            <th>Joués</th>
-            <th>Victoires</th>
-            <th>Nuls</th>
-            <th>Défaites</th>
-            <th>Buts Pour</th>
-            <th>Buts Contre</th>
-            <th>Différence</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for team in ranking %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ team.team.team_name }}</td>
-            <td>{{ team.played }}</td>
-            <td>{{ team.won }}</td>
-            <td>{{ team.drawn }}</td>
-            <td>{{ team.lost }}</td>
-            <td>{{ team.goals_for }}</td>
-            <td>{{ team.goals_against }}</td>
-            <td>{{ team.goal_difference }}</td>
-            <td>{{ team.points }}</td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="10">Aucune donnée disponible.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
- -->
-    <!-- Section Scores en direct -->
+   <!-- Section Scores en direct -->
     <section class="live-scores">
       <h2>Scores en Direct</h2>
       <div class="matches">
