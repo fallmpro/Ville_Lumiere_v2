@@ -33,59 +33,68 @@
     </div>
 
     <!-- Section Actualités -->
-    <section class="news">
-      <h2>Dernières Actualités</h2>
-      <div class="articles">
-        <!-- Exemple dynamique si vous avez une liste d'actualités dans le contexte -->
-        {% for article in articles %}
-        <div class="article">
-          <img src="{{ article.image_url }}" alt="Article {{ forloop.counter }}" />
-          <h3>{{ article.title }}</h3>
-          <p>{{ article.summary }}</p>
-        </div>
-        {% endfor %}
-        <!-- Si aucun article disponible -->
-        {% if not articles %}
-        <p>Aucune actualité pour le moment.</p>
-        {% endif %}
-      </div>
-    </section>
+<section class="news">
+  <h2>Dernières Actualités</h2>
+  <div class="articles" style="display: flex; justify-content: space-between; gap: 20px;">
+    <!-- Première Actualité -->
+    <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+      <img src="https://example.com/image1.jpg" alt="Article 1" style="width: 100%; border-radius: 8px 8px 0 0;" />
+      <h3 style="margin: 10px 0;">Titre de l'Article 1</h3>
+      <p>Résumé court de l'article 1.</p>
+      <a href="https://example.com/article1" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
+    </div>
+    <!-- Deuxième Actualité -->
+    <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+      <img src="https://example.com/image2.jpg" alt="Article 2" style="width: 100%; border-radius: 8px 8px 0 0;" />
+      <h3 style="margin: 10px 0;">Titre de l'Article 2</h3>
+      <p>Résumé court de l'article 2.</p>
+      <a href="https://example.com/article2" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
+    </div>
+    <!-- Troisième Actualité -->
+    <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+      <img src="https://example.com/image3.jpg" alt="Article 3" style="width: 100%; border-radius: 8px 8px 0 0;" />
+      <h3 style="margin: 10px 0;">Titre de l'Article 3</h3>
+      <p>Résumé court de l'article 3.</p>
+      <a href="https://example.com/article3" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
+    </div>
+  </div>
+</section>
 
-   <!-- Section Scores en direct -->
-    <section class="live-scores">
-      <h2>Scores en Direct</h2>
-      <div class="matches">
-        {% for match in matches %}
-        <div class="match">
-          <h3>{{ match.home_team }} vs {{ match.away_team }}</h3>
-          <p>Score: {{ match.home_team_goals }} - {{ match.away_team_goals }}</p>
-        </div>
-        {% endfor %}
-        {% if not matches %}
-        <p>Aucun match en cours pour le moment.</p>
-        {% endif %}
+<!--  
+  Section Scores en direct
+  <section class="live-scores">
+    <h2>Scores en Direct</h2>
+    <div class="matches">
+      {% for match in matches %}
+      <div class="match">
+        <h3>{{ match.home_team }} vs {{ match.away_team }}</h3>
+        <p>Score: {{ match.home_team_goals }} - {{ match.away_team_goals }}</p>
       </div>
-    </section>
-
-    <!-- Section des équipes -->
-<section class="teams">
-  <h2>Équipes</h2>
-  <div class="team-list">
-    {% for team in teams %}
+      {% endfor %}
+      {% if not matches %}
+      <p>Aucun match en cours pour le moment.</p>
+      {% endif %}
+    </div>
+  </section>
+  
+  <section class="teams">
+    <h2>Équipes</h2>
+    <div class="team-list">
+      {% for team in teams %}
       <div class="team">
         <h3>{{ team.team.name }}</h3>
         <div class="team-img">
           <img src="{{ team.team.logo }}" alt="{{ team.team.name }} Logo" class="team-logo" />
         </div>
       </div>
-    {% empty %}
+      {% empty %}
       <p>Aucune équipe trouvée.</p>
-    {% endfor %}
-  </div>
-</section>
-
-    <!-- Pied de page -->
-    <footer>
-    </footer>
-  </body>
+      {% endfor %}
+    </div>
+  </section>
+  
+-->
+  <!-- Pied de page -->
+  
+</body>
 </html>
