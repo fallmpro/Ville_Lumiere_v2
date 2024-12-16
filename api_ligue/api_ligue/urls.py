@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from LUN.views import home
+from LUN.views import signup_view, login_view, logout_view, home
 from LUN import views
 
 urlpatterns = [

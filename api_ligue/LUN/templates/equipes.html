@@ -1,55 +1,56 @@
 <body>
-  {% include 'header.html' %}
-
-  <!-- Barre de recherche -->
-  <form method="get" action="{% url 'equipe_detail' %}">
-      <input type="text" name="nom" placeholder="Recherchez une équipe..." value="{{ search_query|default:'' }}">
-      <button type="submit">Rechercher</button>
-  </form>
-
-  {% if error %}
-      <p style="color: red;">{{ error }}</p>
-  {% endif %}
-
-  {% if team %}
-      <h1>Équipe : {{ team.name }}</h1>
-      <p>Ville : {{ team.city }}</p>
-      <p>Année de fondation : {{ team.founded_year }}</p>
-
-      <h2>Résultats récents :</h2>
-      <table>
-          <thead>
-              <tr>
-                  <th>Date</th>
-                  <th>Adversaire</th>
-                  <th>Score</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for match in matches %}
-                  <tr>
-                      <td>{{ match.date }}</td>
-                      <td>
-                          {% if match.home_team == team %}
-                              {{ match.away_team.name }}
-                          {% else %}
-                              {{ match.home_team.name }}
-                          {% endif %}
-                      </td>
-                      <td>
-                          {% if match.home_team == team %}
-                              {{ match.home_team_score }} - {{ match.away_team_score }}
-                          {% else %}
-                              {{ match.away_team_score }} - {{ match.home_team_score }}
-                          {% endif %}
-                      </td>
-                  </tr>
-              {% empty %}
-                  <tr>
-                      <td colspan="3">Aucun match trouvé.</td>
-                  </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-  {% endif %}
-</body>
+    {% include 'header.html' %}
+  
+    <!-- Barre de recherche -->
+    <form method="get" action="{% url 'equipe_detail' %}">
+        <input type="text" name="nom" placeholder="Recherchez une équipe..." value="{{ search_query|default:'' }}">
+        <button type="submit">Rechercher</button>
+    </form>
+  
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+  
+    {% if team %}
+        <h1>Équipe : {{ team.name }}</h1>
+        <p>Ville : {{ team.city }}</p>
+        <p>Année de fondation : {{ team.founded_year }}</p>
+  
+        <h2>Résultats récents :</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Adversaire</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                    <tr>
+                        <td>{{ match.date }}</td>
+                        <td>
+                            {% if match.home_team == team %}
+                                {{ match.away_team.name }}
+                            {% else %}
+                                {{ match.home_team.name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if match.home_team == team %}
+                                {{ match.home_team_score }} - {{ match.away_team_score }}
+                            {% else %}
+                                {{ match.away_team_score }} - {{ match.home_team_score }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Aucun match trouvé.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+  </body>
+  
