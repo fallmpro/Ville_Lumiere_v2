@@ -17,15 +17,7 @@
   </head>
   <body>
     <!-- En-tête -->
-    <header>
-      <div class="logo">Football Info</div>
-      <nav>
-        <a href="{% url 'home' %}">Accueil</a>
-        <a href="{% url 'teams' %}">Équipes</a>
-        <!-- Nouveau lien pour l'inscription -->
-        <a href="{% url 'signup' %}">Inscription/Connexion</a>
-      </nav>
-    </header>
+    {% include 'header.html' %}
 
     <!-- Section Héros -->
     <div class="hero">

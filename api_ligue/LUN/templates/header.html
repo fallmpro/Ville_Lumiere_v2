@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Lien vers le fichier CSS externe -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="shortcut icon" href="\Ville_Lumiere_v2\img\logo_SL1.jpg" type="image/x-icon" >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- En-tête -->
+    <header>
+      <div class="logo">Football Info</div>
+      <nav>
+        <a href="{% url 'home' %}">Accueil</a>
+        <a href="#">Actualités</a>
+        <a href="#">Compétitions</a>
+        <a href="#">Scores en direct</a>
+        <a href="{% url 'equipe_detail' %}">Équipes</a>
+        <a href="{% url 'signup' %}">Inscription/connexion</a>
+      </nav>
+    </header>
+  </body>
+</html>

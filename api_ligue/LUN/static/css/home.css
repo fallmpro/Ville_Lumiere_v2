@@ -8,30 +8,6 @@ body {
     background-color: #f4f4f4;
 }
 
-header {
-    background-color: #5271FF;
-    color: white;
-    padding: 15px;
-}
-
-header .logo {
-    font-size: 24px;
-    font-weight: bold;
-    display: inline-block;
-}
-
-
-nav {
-    display: inline-block;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 15px;
-    font-size: 16px;
-}
-
 .hero {
     background: url('https://example.com/stade.jpg') no-repeat center center/cover;
     height: 400px;
