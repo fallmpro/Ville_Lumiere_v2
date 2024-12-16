@@ -37,7 +37,7 @@ def home(request):
 
 def teams_view(request):
     teams = Team.objects.all()
-    return render(request, 'teams.html', {'teams': teams})
+    return render(request, 'equipes.html', {'teams': teams})
 
 def matches_view(request):
     matches = Match.objects.all().order_by('-match_date')
@@ -117,17 +117,36 @@ def get_players(request):
     else:
         return HttpResponse("Erreur lors de la récupération des joueurs.", status=500)
 
-def get_teams(request):
-    teams_url = 'https://api-football-v1.p.rapidapi.com/v3/teams'
-    params = {'league': '61', 'season': '2022'}
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-    response = requests.get(teams_url, headers=headers, params=params)
+from django.shortcuts import render, get_object_or_404
+from .models import Team, Match  # Modèles utilisés pour les équipes et les matchs
 
-    if response.status_code == 200:
-        teams = response.json()['response']
-        return render(request, 'teams.html', {'teams': teams})
-    else:
-        return HttpResponse("Erreur lors de la récupération des équipes.", status=500)
+from django.shortcuts import render, get_object_or_404
+from .models import Team, Match
+
+def equipe_detail(request):
+    # Récupération de l'équipe recherchée depuis le paramètre GET
+    team_name = request.GET.get('nom', None)
+    team = None
+    matches = None
+
+    if team_name:
+        try:
+            # Recherche de l'équipe dans la base de données (recherche insensible à la casse)
+            team = Team.objects.get(name__icontains=team_name)
+
+            # Récupération des matchs associés (comme équipe à domicile ou à l'extérieur)
+            matches = Match.objects.filter(home_team=team) | Match.objects.filter(away_team=team)
+            matches = matches.order_by('-date')  # Trier par date décroissante
+        except Team.DoesNotExist:
+            # Si aucune équipe n'est trouvée, on laisse `team` à None
+            team = None
+
+    context = {
+        'team': team,
+        'matches': matches,
+        'search_query': team_name,
+        'error': f"Aucune équipe trouvée pour '{team_name}'." if not team and team_name else None,
+    }
+    return render(request, 'equipes.html', context)
+
+

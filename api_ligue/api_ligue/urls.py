@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('football-results/', views.get_football_results, name='football_results'),
-    path('teams/', views.teams_view, name='teams'),
+    path('teams/', views.equipe_detail, name='equipe_detail'),
     path('matches/', views.matches_view, name='matches'),
     path('ranking/', views.ranking_view, name='ranking'),
 ]

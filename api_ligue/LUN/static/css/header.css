@@ -1,0 +1,31 @@
+body {
+    font-family: "Antonio", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #5271FF;
+    color: white;
+    padding: 15px;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+nav {
+    display: inline-block;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 16px;
+}
