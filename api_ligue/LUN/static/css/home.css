@@ -59,21 +59,39 @@ nav a {
 
 .articles {
     display: flex;
-    justify-content: space-around;
-}
-
-.article {
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .article {
+    flex: 1;
+    font-size: 17px;
+    text-align: center;
     background-color: #f4f4f4;
-    padding: 15px;
-    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-
-.article img {
+  }
+  
+  .article img {
     width: 100%;
-}
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .article h3 {
+    margin: 10px 0;
+  }
+  
+  .article a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  /* Bouton et liens - hover */
+  .article a:hover {
+    text-decoration: underline;
+  }
 
 .live-scores {
     padding: 20px;
