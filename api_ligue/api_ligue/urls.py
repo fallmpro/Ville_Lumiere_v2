@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from LUN.views import signup_view, login_view, logout_view, home
+from django.contrib.auth import views as auth_views
 from LUN import views
 
 urlpatterns = [
@@ -26,5 +27,8 @@ urlpatterns = [
     path('teams/', views.teams_view, name='teams'),
     path('matches/', views.matches_view, name='matches'),
     path('ranking/', views.ranking_view, name='ranking'),
+    path('signup/', views.signup_view, name='signup'),  
+    path('logout/', views.logout_view, name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # Page de connexion
 ]
 

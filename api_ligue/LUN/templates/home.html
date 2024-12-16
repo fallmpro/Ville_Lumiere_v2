@@ -21,9 +21,9 @@
       <div class="logo">Football Info</div>
       <nav>
         <a href="{% url 'home' %}">Accueil</a>
-        <!-- <a href="#">Compétitions</a> -->
-        <!-- <a href="#">Scores en direct</a> -->
         <a href="{% url 'teams' %}">Équipes</a>
+        <!-- Nouveau lien pour l'inscription -->
+        <a href="{% url 'signup' %}">Inscription/Connexion</a>
       </nav>
     </header>
 
@@ -33,68 +33,36 @@
     </div>
 
     <!-- Section Actualités -->
-<section class="news">
-  <h2>Dernières Actualités</h2>
-  <div class="articles" style="display: flex; justify-content: space-between; gap: 20px;">
-    <!-- Première Actualité -->
-    <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
-      <img src="https://example.com/image1.jpg" alt="Article 1" style="width: 100%; border-radius: 8px 8px 0 0;" />
-      <h3 style="margin: 10px 0;">Titre de l'Article 1</h3>
-      <p>Résumé court de l'article 1.</p>
-      <a href="https://example.com/article1" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
-    </div>
-    <!-- Deuxième Actualité -->
-    <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
-      <img src="https://example.com/image2.jpg" alt="Article 2" style="width: 100%; border-radius: 8px 8px 0 0;" />
-      <h3 style="margin: 10px 0;">Titre de l'Article 2</h3>
-      <p>Résumé court de l'article 2.</p>
-      <a href="https://example.com/article2" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
-    </div>
-    <!-- Troisième Actualité -->
-    <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
-      <img src="https://example.com/image3.jpg" alt="Article 3" style="width: 100%; border-radius: 8px 8px 0 0;" />
-      <h3 style="margin: 10px 0;">Titre de l'Article 3</h3>
-      <p>Résumé court de l'article 3.</p>
-      <a href="https://example.com/article3" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
-    </div>
-  </div>
-</section>
-
-<!--  
-  Section Scores en direct
-  <section class="live-scores">
-    <h2>Scores en Direct</h2>
-    <div class="matches">
-      {% for match in matches %}
-      <div class="match">
-        <h3>{{ match.home_team }} vs {{ match.away_team }}</h3>
-        <p>Score: {{ match.home_team_goals }} - {{ match.away_team_goals }}</p>
-      </div>
-      {% endfor %}
-      {% if not matches %}
-      <p>Aucun match en cours pour le moment.</p>
-      {% endif %}
-    </div>
-  </section>
-  
-  <section class="teams">
-    <h2>Équipes</h2>
-    <div class="team-list">
-      {% for team in teams %}
-      <div class="team">
-        <h3>{{ team.team.name }}</h3>
-        <div class="team-img">
-          <img src="{{ team.team.logo }}" alt="{{ team.team.name }} Logo" class="team-logo" />
+    <section class="news">
+      <h2>Dernières Actualités</h2>
+      <div class="articles" style="display: flex; justify-content: space-between; gap: 20px;">
+        <!-- Première Actualité -->
+        <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+          <img src="https://example.com/image1.jpg" alt="Article 1" style="width: 100%; border-radius: 8px 8px 0 0;" />
+          <h3 style="margin: 10px 0;">Titre de l'Article 1</h3>
+          <p>Résumé court de l'article 1.</p>
+          <a href="https://example.com/article1" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
+        </div>
+        <!-- Deuxième Actualité -->
+        <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+          <img src="https://example.com/image2.jpg" alt="Article 2" style="width: 100%; border-radius: 8px 8px 0 0;" />
+          <h3 style="margin: 10px 0;">Titre de l'Article 2</h3>
+          <p>Résumé court de l'article 2.</p>
+          <a href="https://example.com/article2" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
+        </div>
+        <!-- Troisième Actualité -->
+        <div class="article" style="flex: 1; text-align: center; border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
+          <img src="https://example.com/image3.jpg" alt="Article 3" style="width: 100%; border-radius: 8px 8px 0 0;" />
+          <h3 style="margin: 10px 0;">Titre de l'Article 3</h3>
+          <p>Résumé court de l'article 3.</p>
+          <a href="https://example.com/article3" style="color: #007BFF; text-decoration: none;">Lire l'article</a>
         </div>
       </div>
-      {% empty %}
-      <p>Aucune équipe trouvée.</p>
-      {% endfor %}
-    </div>
-  </section>
-  
--->
-  <!-- Pied de page -->
-  
-</body>
+    </section>
+
+    <!-- Pied de page -->
+    <footer>
+      <p>&copy; 2024 Football Info. Tous droits réservés.</p>
+    </footer>
+  </body>
 </html>

@@ -1,9 +1,11 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from .models import Team, Match, Ranking
 from .forms import SignUpForm
+from django.contrib import messages
 import requests
 
 
@@ -13,8 +15,7 @@ BASE_URL = 'https://v3.football.api-sports.io/'
 
 
 
-# Vue pour la page principale
-# Vue pour la page principale
+
 # Vue pour la page principale
 def home(request):
     # URL pour récupérer les résultats des matchs
@@ -52,7 +53,7 @@ def home(request):
     return render(request, 'home.html', {'matches': matches, 'teams': teams})
 def teams_view(request):
     teams = Team.objects.all()
-    return render(request, 'teams.html', {'teams': teams})
+    return render(request, 'equipes.html', {'teams': teams})
 
 def matches_view(request):
     matches = Match.objects.all().order_by('-match_date')
@@ -150,19 +151,18 @@ def get_teams(request):
 
 # Vue pour l'inscription
 def signup_view(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()  # Crée l'utilisateur
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, password=password)  # Authentifie l'utilisateur
-            login(request, user)  # Connecte l'utilisateur automatiquement
-            return redirect('home')  # Redirige vers la page d'accueil
+            form.save()  # Enregistre l'utilisateur dans la BDD
+            messages.success(request, "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.")
+            return redirect('login')  # Redirige vers la page de connexion
+        else:
+            messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
-        form = SignUpForm()
+        form = UserCreationForm()
+    
     return render(request, 'signup.html', {'form': form})
-
 # Vue pour la connexion
 def login_view(request):
     if request.method == 'POST':

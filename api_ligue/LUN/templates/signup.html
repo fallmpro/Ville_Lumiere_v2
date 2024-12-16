@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inscription</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+  </head>
+  <body>
     <header>
-        <div class="logo">Football Info</div>
+      <div class="logo">Football Info</div>
     </header>
 
     <div class="signup-form">
-        <h1>Créer un compte</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn">S'inscrire</button>
-        </form>
-        <p>Vous avez déjà un compte ? <a href="{% url 'login' %}">Se connecter</a></p>
+      <h1>Créer un compte</h1>
+
+      <!-- Messages de confirmation/erreur -->
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Formulaire d'inscription -->
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">S'inscrire</button>
+      </form>
+
+      <p>Vous avez déjà un compte ? 
+        <a href="{% url 'login' %}">Se connecter</a>
+      </p>
     </div>
-</body>
+  </body>
 </html>
