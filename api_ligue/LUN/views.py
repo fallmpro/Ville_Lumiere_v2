@@ -86,6 +86,11 @@ def get_football_results(request):
         return render(request, 'football_results.html', {'matches': matches})
     else:
         return HttpResponse("Erreur lors de la récupération des données de l'API.", status=500)
+
+def ranking_view(request):
+    rankings = Ranking.objects.all().order_by('position')
+    return render(request, 'ranking.html', {'rankings': rankings})
+
     
 def get_ranking(request):
     ranking_url = 'https://api-football-v1.p.rapidapi.com/v3/standings'
