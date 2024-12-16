@@ -17,15 +17,7 @@
   </head>
   <body>
     <!-- En-tête -->
-    <header>
-      <div class="logo">Football Info</div>
-      <nav>
-        <a href="{% url 'home' %}">Accueil</a>
-        <!-- <a href="#">Compétitions</a> -->
-        <!-- <a href="#">Scores en direct</a> -->
-        <a href="{% url 'teams' %}">Équipes</a>
-      </nav>
-    </header>
+    {% include 'header.html' %}
 
     <!-- Section Héros -->
     <div class="hero">
@@ -64,7 +56,9 @@
   </div>
 </section>
 
-  <!-- Pied de page -->
-  
-</body>
+    <!-- Pied de page -->
+    <footer>
+      <p>&copy; 2024 Football Info. Tous droits réservés.</p>
+    </footer>
+  </body>
 </html>

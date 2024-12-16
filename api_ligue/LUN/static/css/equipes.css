@@ -1,3 +1,13 @@
+body {
+  font-family: "Antonio", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
 /* Barre de recherche */
 /* .search-bar {
     display: flex;
@@ -5,6 +15,7 @@
     margin: 20px 0;
   } */
   
+
   #search-input {
     width: 300px;
     padding: 10px;
