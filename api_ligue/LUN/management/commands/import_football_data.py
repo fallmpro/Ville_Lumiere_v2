@@ -5,7 +5,7 @@ import time
 
 
 # Remplacez avec vos clés et URL
-API_KEY = '8c6d376d01062e1585c4f7df05280b64'
+API_KEY = '90f3bbf796250f039530e422edc524ae'
 BASE_URL = 'https://v3.football.api-sports.io'
 
 HEADERS = {
@@ -17,32 +17,78 @@ class Command(BaseCommand):
     help = "Importe les données football de l'API et les stocke dans la base de données"
 
     def handle(self, *args, **kwargs):
-    #    self.import_teams()
+        self.stdout.write("Début de l'importation des équipes")
+        self.import_teams()
+        self.stdout.write("Équipes importées")
+    
+        self.stdout.write("Début de l'importation des classements")
+        self.import_rankings()
+        self.stdout.write("Classements importés")
     #    self.import_players()
     #    self.import_matches()
-    #    self.import_rankings()
-        self.import_match_stats()
-        self.stdout.write(self.style.SUCCESS("Données importées avec succès."))
+    #    self.import_match_stats()
 
     def import_teams(self):
+        self.stdout.write("Appel de la fonction import_teams")
         url = f"{BASE_URL}/teams"
         params = {'league': 61, 'season': 2022}
         response = requests.get(url, headers=HEADERS, params=params)
+        self.stdout.write(str(response.json()))
+
         
         if response.status_code == 200:
             teams = response.json().get('response', [])
             for team_data in teams:
-                team, created = Team.objects.update_or_create(
-                    api_id=team_data['team']['id'],  
-                    defaults={
-                        'name': team_data['team']['name'],
-                        'logo': team_data['team']['logo'],
-                        'country': team_data['team']['country'],
-                    }
-                )
-                self.stdout.write(f"Équipe {'créée' if created else 'mise à jour'}: {team.name}")
+                team_info = team_data['team']
+                team_venue = team_data.get('venue', {}) 
+
+                self.stdout.write(f"Traitement de l'équipe : {team_info.get('name', 'Inconnue')}")
+                self.stdout.write(f"Ville : {team_venue.get('city', 'Inconnu')}, Fondée : {team_info.get('founded', 'Non disponible')}")
+
+                try:
+                    team, created = Team.objects.update_or_create(
+                        api_id=team_info['id'],  
+                        defaults={
+                            'name': team_info['name'],
+                            'logo': team_info.get('logo', "https://via.placeholder.com/150"),
+                            'country': team_info.get('country', "Unknown"),
+                            'city': team_venue.get('city', "Inconnu"),
+                            'founded_year': team_info.get('founded', None) or 0,
+                        }
+                    )
+                    self.stdout.write(f"Équipe {'créée' if created else 'mise à jour'}: {team.name}")
+                except Exception as e:
+                    self.stderr.write(f"Erreur lors de l'import de l'équipe {team_info['name']}: {str(e)}")
         else:
             self.stderr.write(f"Erreur lors de la récupération des équipes: {response.status_code}")
+    
+
+    def import_rankings(self):
+        self.stdout.write("Appel de la fonction import_ranking")
+        url = f"{BASE_URL}/standings"
+        params = {'league': 61, 'season': 2022}  # Exemple : Ligue 1, saison 2022
+        response = requests.get(url, headers=HEADERS, params=params)
+
+        if response.status_code == 200:
+            standings = response.json().get('response', [])
+            if standings:
+                for team_data in standings[0]['league']['standings'][0]:
+                    team = Team.objects.filter(api_id=team_data['team']['id']).first()
+                    if team:
+                        Ranking.objects.update_or_create(
+                            team=team,
+                            defaults={
+                                'points': team_data['points'],
+                                'position': team_data['rank'],
+                                'goal_difference': team_data['goalsDiff'],
+                            }
+                        )
+                        self.stdout.write(f"Classement mis à jour pour l'équipe : {team.name}")
+        else:
+            self.stderr.write(f"Erreur lors de la récupération du classement : {response.status_code}")
+
+"""
+commande pas utile car bdd complete
 
     def import_players(self):
         url = f"{BASE_URL}/players"
@@ -74,7 +120,7 @@ class Command(BaseCommand):
                     self.stdout.write(f"Joueur importé: {player_data['player']['firstname']} {player_data['player']['lastname']}")
         else:
             self.stderr.write(f"Erreur lors de la récupération des joueurs: {response.status_code}")
-    
+
     def import_matches(self):
         url = f"{BASE_URL}/fixtures"
         params = {'league': 61, 'season': 2022}  # Exemple : Ligue 1, saison 2022
@@ -101,33 +147,11 @@ class Command(BaseCommand):
                     )
         else:
             self.stderr.write(f"Erreur lors de la récupération des matchs : {response.status_code}")
-
-    def import_rankings(self):
-        url = f"{BASE_URL}/standings"
-        params = {'league': 61, 'season': 2022}  # Exemple : Ligue 1, saison 2022
-        response = requests.get(url, headers=HEADERS, params=params)
-
-        if response.status_code == 200:
-            standings = response.json().get('response', [])
-            if standings:
-                for team_data in standings[0]['league']['standings'][0]:
-                    team = Team.objects.filter(api_id=team_data['team']['id']).first()
-                    if team:
-                        Ranking.objects.update_or_create(
-                            team=team,
-                            defaults={
-                                'points': team_data['points'],
-                                'position': team_data['rank'],
-                            }
-                        )
-                        self.stdout.write(f"Classement mis à jour pour l'équipe : {team.name} (Position : {team_data['rank']})")
-        else:
-            self.stderr.write(f"Erreur lors de la récupération du classement : {response.status_code}")
-
+    
     def import_match_stats(self):
-        """
-        Importe les statistiques des joueurs pour chaque match existant dans la base de données.
-        """
+        
+        #Importe les statistiques des joueurs pour chaque match existant dans la base de données.
+        
         matches = Match.objects.all()  # Récupère tous les matchs déjà importés
         for i, match in enumerate(matches):
             self.stdout.write(f"Traitement du match {i + 1}/{matches.count()} : {match}")
@@ -171,4 +195,4 @@ class Command(BaseCommand):
 
             # Pause pour éviter les limites de l'API
             time.sleep(1)
-
+"""
