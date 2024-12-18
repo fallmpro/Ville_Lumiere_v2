@@ -1,56 +1,64 @@
-<body>
-    {% include 'header.html' %}
-  
-    <!-- Barre de recherche -->
-    <form method="get" action="{% url 'equipe_detail' %}">
-        <input type="text" name="nom" placeholder="Recherchez une équipe..." value="{{ search_query|default:'' }}">
-        <button type="submit">Rechercher</button>
-    </form>
-  
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-  
-    {% if team %}
-        <h1>Équipe : {{ team.name }}</h1>
-        <p>Ville : {{ team.city }}</p>
-        <p>Année de fondation : {{ team.founded_year }}</p>
-  
-        <h2>Résultats récents :</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Adversaire</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for match in matches %}
-                    <tr>
-                        <td>{{ match.date }}</td>
-                        <td>
-                            {% if match.home_team == team %}
-                                {{ match.away_team.name }}
-                            {% else %}
-                                {{ match.home_team.name }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if match.home_team == team %}
-                                {{ match.home_team_score }} - {{ match.away_team_score }}
-                            {% else %}
-                                {{ match.away_team_score }} - {{ match.home_team_score }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="3">Aucun match trouvé.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-  </body>
-  
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Équipe</title>
+        <link rel="stylesheet" href="{% static 'css/equipes.css' %}">
+    </head>
+
+    <body>
+        {% include 'header.html' %}
+        <div class="container">
+            <!-- Barre de recherche -->
+            <form method="get" action="{% url 'equipe_detail' %}" class="search-bar">
+                <input id="search-input" type="text" name="nom" placeholder="Recherchez une équipe..." value="{{ search_query|default:'' }}">
+                <button id="search-button" type="submit">Rechercher</button>
+            </form>
+
+            {% if team %}
+                <h1>Équipe : {{ team.name }}</h1>
+                <div class="results">
+                    <h2>Résultats récents :</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Adversaire</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for match in matches|slice:":10" %}
+                                <tr>
+                                    <td>{{ match.date }}</td>
+                                    <td>
+                                        {% if match.home_team == team %}
+                                            {{ match.away_team.name }}
+                                        {% else %}
+                                            {{ match.home_team.name }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if match.home_team == team %}
+                                            {{ match.home_team_score }} - {{ match.away_team_score }}
+                                        {% else %}
+                                            {{ match.away_team_score }} - {{ match.home_team_score }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3">Aucun match trouvé.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p style="text-align: center;">Veuillez rechercher une équipe pour afficher ses résultats récents.</p>
+            {% endif %}
+        </div>
+    </body>
+</html>
