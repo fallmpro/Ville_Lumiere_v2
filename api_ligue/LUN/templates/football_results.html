@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résultats des matchs</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/football_results.css' %}">
+    <title>Résultats Football</title>
 </head>
 <body>
-    <h1>Résultats des matchs de football</h1>
+    {% include 'header.html' %}
 
-    {% if matches %}
-        <table border="1">
+    <div class="container">
+        <h1>Résultats des matchs</h1>
+
+        <!-- Formulaire pour filtrer -->
+        <form method="get" action="{% url 'football_results' %}" class="filter-form">
+            <label for="filter">Filtrer par :</label>
+            <select name="filter" id="filter">
+                <option value="all" {% if filter_type == 'all' %}selected{% endif %}>Tous les matchs</option>
+                <option value="5_last" {% if filter_type == '5_last' %}selected{% endif %}>5 derniers matchs</option>
+                <option value="15_last" {% if filter_type == '15_last' %}selected{% endif %}>15 derniers matchs</option>
+            </select>
+
+            <label for="team">Nom de l'équipe :</label>
+            <input type="text" name="team" id="team" placeholder="Recherchez une équipe..." value="{{ team_name|default:'' }}">
+
+            <button type="submit">Appliquer</button>
+        </form>
+
+        <!-- Tableau des résultats -->
+        <table class="results-table">
             <thead>
                 <tr>
+                    <th>Date</th>
                     <th>Équipe à domicile</th>
-                    <th>Score à domicile</th>
-                    <th>Score à l'extérieur</th>
+                    <th>Score</th>
                     <th>Équipe à l'extérieur</th>
-                    <th>Date du match</th>
-                    <th>Stade</th>
-                    <th>Arbitre</th>
                 </tr>
             </thead>
             <tbody>
                 {% for match in matches %}
-                    <tr>
-                        <td><img src="{{ match.teams.home.logo }}" alt="{{ match.teams.home.name }}" width="30"> {{ match.teams.home.name }}</td>
-                        <td>{{ match.goals.home }}</td>
-                        <td>{{ match.goals.away }}</td>
-                        <td><img src="{{ match.teams.away.logo }}" alt="{{ match.teams.away.name }}" width="30"> {{ match.teams.away.name }}</td>
-                        <td>{{ match.fixture.date }}</td>
-                        <td>{{ match.fixture.venue.name }}</td>
-                        <td>{{ match.fixture.referee }}</td>
-                    </tr>
+                <tr>
+                    <td>{{ match.date|date:"d/m/Y H:i" }}</td>
+                    <td>{{ match.home_team.name }}</td>
+                    <td>{{ match.home_team_score }} - {{ match.away_team_score }}</td>
+                    <td>{{ match.away_team.name }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Aucun match trouvé.</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <p>Aucun match trouvé.</p>
-    {% endif %}
+    </div>
 </body>
 </html>
