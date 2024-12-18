@@ -34,6 +34,7 @@ def matches_view(request):
 
 def ranking_view(request):
     ranking = Ranking.objects.all().order_by('-points', '-goal_difference')
+    print(ranking)
     return render(request, 'ranking.html', {'ranking': ranking})
 
 def football_results(request):
