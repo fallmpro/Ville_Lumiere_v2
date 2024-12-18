@@ -1,9 +1,11 @@
 from django.db import models
 from django.utils import timezone
-
-# Table pour les équipes
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class Team(models.Model):
     api_id = models.IntegerField(unique=True, null=True, default=0)
@@ -16,9 +18,24 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
 
     def get_recent_matches(self):
         return Match.objects.filter(home_team=self) | Match.objects.filter(away_team=self)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    favorites = models.ManyToManyField('Team', blank=True, related_name='favorited_by')
+
+    def __str__(self):
+        return f"Profil de {self.user.username}"
 
 
 # Table pour les joueurs
