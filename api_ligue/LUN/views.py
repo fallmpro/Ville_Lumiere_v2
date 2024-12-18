@@ -10,7 +10,6 @@ from django.db.models import Q
 from datetime import timedelta
 from .models import Team, Match, Ranking
 from .forms import SignUpForm
-from django.contrib import messages
 import requests
 
 
@@ -129,3 +128,51 @@ def remove_favorite(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     request.user.profile.favorites.remove(team)
     return redirect('ranking')
+
+
+from django.shortcuts import render
+
+def quizz_view(request):
+    # Questions et réponses du quiz
+    questions = [
+        {
+            'question': "Quelle équipe a remporté la Coupe du Monde 2018 ?",
+            'choices': ["Allemagne", "Brésil", "France", "Argentine"],
+            'correct': "France",
+        },
+        {
+            'question': "Qui est le meilleur buteur de l'histoire de la Ligue des Champions ?",
+            'choices': ["Cristiano Ronaldo", "Lionel Messi", "Robert Lewandowski", "Karim Benzema"],
+            'correct': "Cristiano Ronaldo",
+        },
+        {
+            'question': "Combien de joueurs sont sur le terrain dans une équipe de football ?",
+            'choices': ["9", "10", "11", "12"],
+            'correct': "11",
+        },
+        {
+            'question': "Quel pays organise la Coupe du Monde 2026 ?",
+            'choices': ["Canada, Mexique et États-Unis", "Angleterre", "Qatar", "Allemagne"],
+            'correct': "Canada, Mexique et États-Unis",
+        },
+        {
+            'question': "Quel joueur a remporté le Ballon d'Or 2023 ?",
+            'choices': ["Lionel Messi", "Erling Haaland", "Kylian Mbappé", "Robert Lewandowski"],
+            'correct': "Lionel Messi",
+        },
+    ]
+
+    results = None
+    if request.method == "POST":
+        user_answers = [request.POST.get(f"question_{i}") for i in range(len(questions))]
+        results = [
+            {
+                'question': q['question'],
+                'user_answer': user_answers[i],
+                'correct_answer': q['correct'],
+                'is_correct': user_answers[i] == q['correct'],
+            }
+            for i, q in enumerate(questions)
+        ]
+
+    return render(request, 'quizz.html', {'questions': questions, 'results': results})

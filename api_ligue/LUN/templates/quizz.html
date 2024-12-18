@@ -1,31 +1,61 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizz</title>
-    <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
-</head>
-<body>
-    {% include 'header.html' %}
-        <h1>Quizz Ligue 1</h1>
-        <form method="POST" action="{% url 'corriger_quizz' %}">
-            {% csrf_token %}
-            {% for question in questions %}
-            <div class="question">
-                <p>{{ question.question_text }}</p>
-                <ul>
-                    {% for choice in question.choices %}
-                    <li>
-                        <input type="radio" name="question_{{ forloop.counter }}" value="{{ forloop.counter0 }}">
-                        {{ choice }}
-                    </li>
+    {% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quizz Football</title>
+        <link rel="stylesheet" href="{% static 'css/quizz.css' %}">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        <div class="container">
+            <h1>Quizz Football</h1>
+            {% if results %}
+                <h2>Résultats</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Votre réponse</th>
+                            <th>Bonne réponse</th>
+                            <th>Résultat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <td>{{ result.question }}</td>
+                            <td>{{ result.user_answer }}</td>
+                            <td>{{ result.correct_answer }}</td>
+                            <td>
+                                {% if result.is_correct %}
+                                    ✅ Correct
+                                {% else %}
+                                    ❌ Incorrect
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    {% for question in questions %}
+                        <div class="question-block">
+                            <p>{{ question.question }}</p>
+                            {% for choice in question.choices %}
+                                <label>
+                                    <input type="radio" name="question_{{ forloop.counter0 }}" value="{{ choice }}">
+                                    {{ choice }}
+                                </label><br>
+                            {% endfor %}
+                        </div>
                     {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
-            <button type="submit">Terminer le quizz</button>
-        </form>
+                    <button type="submit">Valider</button>
+                </form>
+            {% endif %}
+        </div>
     </body>
-    </html>
+</html>
