@@ -24,7 +24,7 @@ class Command(BaseCommand):
         self.import_match_stats()
         self.stdout.write(self.style.SUCCESS("Données importées avec succès."))
 
-    """def import_teams(self):
+    def import_teams(self):
         url = f"{BASE_URL}/teams"
         params = {'league': 61, 'season': 2022}
         response = requests.get(url, headers=HEADERS, params=params)
@@ -122,7 +122,7 @@ class Command(BaseCommand):
                         )
                         self.stdout.write(f"Classement mis à jour pour l'équipe : {team.name} (Position : {team_data['rank']})")
         else:
-            self.stderr.write(f"Erreur lors de la récupération du classement : {response.status_code}")"""
+            self.stderr.write(f"Erreur lors de la récupération du classement : {response.status_code}")
 
     def import_match_stats(self):
         """
