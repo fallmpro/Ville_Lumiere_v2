@@ -85,7 +85,8 @@ class MatchStat(models.Model):
 class Ranking(models.Model):
     team = models.ForeignKey(Team, related_name='rankings', on_delete=models.CASCADE)
     points = models.IntegerField()
-    position = models.IntegerField(default=1) 
+    position = models.IntegerField(default=1)
+    goal_difference = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.team} - {self.points} pts"

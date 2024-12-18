@@ -104,10 +104,22 @@ def get_ranking(request):
 
     if response.status_code == 200:
         data = response.json()
-        standings = data['response'][0]['league']['standings']
+        standings = []
+
+        # Récupère les données pour chaque équipe
+        for team_data in data['response'][0]['league']['standings'][0]:
+            standings.append({
+                'position': team_data['rank'],
+                'team_name': team_data['team']['name'],
+                'points': team_data['points'],
+                'goal_difference': team_data['goalsDiff'],  # Assure-toi que c'est la bonne clé
+                'logo': team_data['team']['logo'],  # Ajout du logo si besoin
+            })
+
         return render(request, 'ranking.html', {'standings': standings})
     else:
         return HttpResponse("Erreur lors de la récupération du classement.", status=500)
+
 
 def get_matches(request):
     matches_url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures'
