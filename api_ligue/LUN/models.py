@@ -12,8 +12,8 @@ class Team(models.Model):
     name = models.CharField(max_length=100, default="N/A")
     city = models.CharField(max_length=100, default="Inconnu")
     founded_year = models.IntegerField(default=timezone.now().year)
-    country = models.CharField(max_length=100, null=True, blank=True, default="Unknown")  # Ajout du champ avec valeur par défaut
-    logo = models.URLField(null=True, blank=True, default="https://via.placeholder.com/150")  # Ajout du champ avec valeur par défaut
+    country = models.CharField(max_length=100, null=True, blank=True, default="Unknown")  
+    logo = models.URLField(null=True, blank=True, default="https://via.placeholder.com/150")  
 
     def __str__(self):
         return self.name
