@@ -12,13 +12,9 @@ from .models import Team, Match, Ranking
 from .forms import SignUpForm
 import requests
 
-
 # URL de l'API (remplace par ta clé API et ton URL)
 API_KEY = '4e1c0aee9fb2abbb18aae9091a28de5c'
 BASE_URL = 'https://v3.football.api-sports.io/'
-
-
-
 
 # Vue pour la page principale
 def home(request):
