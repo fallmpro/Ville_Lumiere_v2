@@ -11,7 +11,7 @@ On a utilisé une API déjà existante gratuite "API-FOOTBALL", sur le thème du
 
 Le championnat français de football, Ligue 1, est l'une des compétitions les plus suivies dans le monde du sport. Ce projet vise à créer une plateforme d'information dédiée à la Ligue 1 pour offrir aux fans, journalistes, et analystes un accès rapide et complet aux données et actualités du championnat.
 
-Notre objectif est de récupérer les données de l'API football et les utiliser sur notre propre site web dans lequel vous pourrez retrouver ddes informations sur vos équipes de ligue 1, les résultats de matchs, classement du championnat, dernières actualité et une page quizz avec des petites questions sur le championnats !
+Notre objectif est de récupérer les données de l'API football et les utiliser sur notre propre site web dans lequel vous pourrez retrouver ddes informations sur vos équipes de ligue 1, les résultats de matchs, classement du championnat et les dernières actualités !
 
 
 ## Fonctionnalités
@@ -19,7 +19,6 @@ Notre objectif est de récupérer les données de l'API football et les utiliser
 - Actualités principales : Articles, interviews, rumeurs de transferts. = api_ligue/LUN/templates/home.html à partir de la ligne 28 // On y trouve sur le site les dernières actualités sur la Ligue 1 
 - Classement du championnat = api_ligue/LUN/templates/ranking.html  // un classement des équipes de l'équipe qui a le plus de points a celle qui en a le moins
 - Recherche d'une équipe avec informations générales: Matchs, scores et dates = api_ligue/LUN/templates/equipes.html //  On y trouve une zone de texte pour rechercher une équipe et ensuite vous aurez les matchs qu'ils ont réalisés avec la date.
-- Quizz : par rapport à un match = api_ligue/LUN/templates/quizz.html // Sur le site, on y retrouve des questions où tu peux essayer d'y répondre.
 - Favoris : Mettre des équipes en favoris, on ajoute depuis la page classement = api_ligue/LUN/templates/ranking.html à partir de la ligne 31 // On y trouve la fonctionnalité de mettre en favoris une équipe en s'étant connecté au préalable.
 - Résultat : Voir les résultats du championnat = api_ligue/LUN/templates/football_resulats.html // on y trouve les résultat des matchs de la ligue 1, en partant du dernier match au premier
 
