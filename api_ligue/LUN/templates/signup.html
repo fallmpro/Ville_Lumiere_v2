@@ -4,16 +4,28 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inscription</title>
-    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+    <title>Football Info - Connexion</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="shortcut icon" href="img\logo_SL1.jpg" type="image/x-icon" >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- <header>
-      <div class="logo">Football Info</div>
-    </header> -->
+    <!-- En-tête -->
+    {% include 'header.html' %}
 
-    <div class="signup-form">
-      <h1>Créer un compte</h1>
+    <!-- Section Héros
+    <div class="hero">
+      <h1>Bienvenue sur Ville Lumière Info</h1>
+    </div> -->
+
+    <!-- Formulaire de Connexion -->
+    <div class="login-form">
+      <h1>S'inscrire</h1>
 
       <!-- Messages de confirmation/erreur -->
       {% if messages %}
@@ -24,16 +36,19 @@
         </div>
       {% endif %}
 
-      <!-- Formulaire d'inscription -->
+      <!-- Formulaire de Connexion -->
       <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn">S'inscrire</button>
       </form>
 
-      <p>Vous avez déjà un compte ? 
-        <a href="{% url 'login' %}">Se connecter</a>
-      </p>
+      <p>Vous avez déja un compte ? <a href="{% url 'login' %}">Se connecter</a></p>
     </div>
+
+    <!-- Pied de page -->
+    <footer>
+      <p>&copy; 2024 Football Info. Tous droits réservés.</p>
+    </footer>
   </body>
 </html>
