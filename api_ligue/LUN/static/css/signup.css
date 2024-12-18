@@ -72,3 +72,13 @@ p {
     padding: 10px;
   }
   
+  .logo{
+    background: url('https://example.com/stade.jpg') no-repeat center center/cover;
+    height: 400px;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }

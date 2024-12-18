@@ -29,6 +29,9 @@ urlpatterns = [
     path('ranking/', views.ranking_view, name='ranking'),
     path('signup/', views.signup_view, name='signup'),  
     path('logout/', views.logout_view, name='logout'),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # Page de connexion
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  
+    path('ranking/', views.ranking_view, name='ranking'),
+    path('add-favorite/<int:team_id>/', views.add_favorite, name='add_favorite'),
+    path('remove-favorite/<int:team_id>/', views.remove_favorite, name='remove_favorite'),
 ]
 

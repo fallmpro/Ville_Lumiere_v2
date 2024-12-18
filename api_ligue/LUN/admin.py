@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.db.models import F
-from .models import Match, Team, Ranking
+from .models import Match, Team, Ranking, Profile
+
+admin.site.register(Profile)
 
 # --- Admin pour Match ---
 class MatchAdmin(admin.ModelAdmin):
     list_display = ('home_team', 'away_team', 'date', 'home_team_goals', 'away_team_goals')  # Utilisation de 'date' au lieu de 'match_date'
     list_filter = ('date', 'home_team', 'away_team')  # Utilisation de 'date' au lieu de 'match_date'
     search_fields = ('home_team__name', 'away_team__name')
+
 
     def home_team_goals(self, obj):
         return obj.home_team_score

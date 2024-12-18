@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render , redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Team, Match, Ranking
 from .forms import SignUpForm
 from django.contrib import messages
@@ -197,3 +198,15 @@ def login_view(request):
 def logout_view(request):
     logout(request)  # Déconnecte l'utilisateur
     return redirect('home')
+
+@login_required
+def add_favorite(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    request.user.profile.favorites.add(team)
+    return redirect('ranking')
+
+@login_required
+def remove_favorite(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    request.user.profile.favorites.remove(team)
+    return redirect('ranking')
