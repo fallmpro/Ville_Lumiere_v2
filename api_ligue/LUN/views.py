@@ -4,15 +4,18 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render , redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.utils import timezone
+from django.db.models import Q
+from datetime import timedelta
 from .models import Team, Match, Ranking
 from .forms import SignUpForm
-from .questions import get_questions
 from django.contrib import messages
 import requests
 
 
 # URL de l'API (remplace par ta clé API et ton URL)
-API_KEY = '8c6d376d01062e1585c4f7df05280b64'
+API_KEY = '4e1c0aee9fb2abbb18aae9091a28de5c'
 BASE_URL = 'https://v3.football.api-sports.io/'
 
 
@@ -20,39 +23,8 @@ BASE_URL = 'https://v3.football.api-sports.io/'
 
 # Vue pour la page principale
 def home(request):
-    # URL pour récupérer les résultats des matchs
-    url_matches = f"{BASE_URL}/fixtures"
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-    params_matches = {
-        'league': 61, 
-        'season': 2022 
-    }
-    response_matches = requests.get(url_matches, headers=headers, params=params_matches)
+    return render(request, 'home.html')
 
-    if response_matches.status_code == 200:
-        data_matches = response_matches.json()
-        matches = data_matches.get('response', [])
-    else:
-        matches = []
-
-    # URL pour récupérer les équipes
-    url_teams = f"{BASE_URL}/teams"
-    params_teams = {
-        'league': 61,
-        'season': 2022
-    }
-    response_teams = requests.get(url_teams, headers=headers, params=params_teams)
-
-    if response_teams.status_code == 200:
-        data_teams = response_teams.json()
-        teams = data_teams.get('response', [])
-    else:
-        teams = []
-
-    return render(request, 'home.html', {'matches': matches, 'teams': teams})
 def teams_view(request):
     teams = Team.objects.all()
     return render(request, 'equipes.html', {'teams': teams})
@@ -65,107 +37,54 @@ def ranking_view(request):
     ranking = Ranking.objects.all().order_by('-points', '-goal_difference')
     return render(request, 'ranking.html', {'ranking': ranking})
 
+def football_results(request):
+    filter_type = request.GET.get('filter', 'all')  # Par défaut, afficher tous les matchs
+    team_name = request.GET.get('team', '').strip()  # Filtrer par nom d'équipe (facultatif)
 
-def get_football_results(request):
-    url = f"{BASE_URL}/fixtures"
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-    params = {
-        'league': 61, 
-        'season': 2022 
-    }
-    response = requests.get(url, headers=headers, params=params)
-    
-    print(f"Status Code: {response.status_code}")
-    print(f"Response JSON: {response.json()}")
-    
-    if response.status_code == 200:
-        data = response.json()
-        matches = data.get('response', [])  # Les données se trouvent généralement ici
-        print(f"Matches Data: {matches}")
-        return render(request, 'football_results.html', {'matches': matches})
-    else:
-        return HttpResponse("Erreur lors de la récupération des données de l'API.", status=500)
+    # Base query : tous les matchs
+    matches = Match.objects.all().order_by('-date')
 
-def ranking_view(request):
-    rankings = Ranking.objects.all().order_by('position')
-    return render(request, 'ranking.html', {'rankings': rankings})
+    # Filtrer par équipe si un nom est fourni
+    if team_name:
+        matches = matches.filter(
+            Q(home_team__name__icontains=team_name) | Q(away_team__name__icontains=team_name)
+        )
 
-    
-def get_ranking(request):
-    ranking_url = 'https://api-football-v1.p.rapidapi.com/v3/standings'
-    params = {'season': '2022', 'league': '61'}
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-    response = requests.get(ranking_url, headers=headers, params=params)
+    # Appliquer le filtre sur le nombre de matchs
+    if filter_type == '5_last':
+        matches = matches[:5]
+    elif filter_type == '15_last':
+        matches = matches[:15]
 
-    if response.status_code == 200:
-        data = response.json()
-        standings = data['response'][0]['league']['standings']
-        return render(request, 'ranking.html', {'standings': standings})
-    else:
-        return HttpResponse("Erreur lors de la récupération du classement.", status=500)
-
-def get_matches(request):
-    matches_url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures'
-    params = {'season': '2022', 'league': '61', 'timezone': 'Europe/Paris'}
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-    response = requests.get(matches_url, headers=headers, params=params)
-
-    if response.status_code == 200:
-        matches = response.json()['response']
-        return render(request, 'matches.html', {'matches': matches})
-    else:
-        return HttpResponse("Erreur lors de la récupération des matchs.", status=500)
-
-def get_players(request):
-    players_url = 'https://api-football-v1.p.rapidapi.com/v3/players'
-    params = {'team': 'team_id', 'season': '2022'}
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-    response = requests.get(players_url, headers=headers, params=params)
-
-    if response.status_code == 200:
-        players = response.json()['response']
-        return render(request, 'players.html', {'players': players})
-    else:
-        return HttpResponse("Erreur lors de la récupération des joueurs.", status=500)
+    return render(request, 'football_results.html', {
+        'matches': matches,
+        'filter_type': filter_type,
+        'team_name': team_name
+    })
 
 def equipe_detail(request):
-    # Récupération de l'équipe recherchée depuis le paramètre GET
-    team_name = request.GET.get('nom', None)
-    team = None
-    matches = None
+    search_query = request.GET.get('nom', '')
+    filter_type = request.GET.get('filter', 'all')  # Par défaut, "all"
+    team = Team.objects.filter(name__icontains=search_query).first() if search_query else None
+    matches = []
 
-    if team_name:
-        try:
-            # Recherche de l'équipe dans la base de données (recherche insensible à la casse)
-            team = Team.objects.get(name__icontains=team_name)
+    if search_query:
+        team = Team.objects.filter(name__icontains=search_query).first()
+        if team:
+            if filter_type == 'home':
+                matches = Match.objects.filter(home_team=team).order_by('-date')[:10]
+            elif filter_type == 'away':
+                matches = Match.objects.filter(away_team=team).order_by('-date')[:10]
+            else:  # 'all'
+                matches = Match.objects.filter(home_team=team) | Match.objects.filter(away_team=team)
+                matches = matches.order_by('-date')[:10]
 
-            # Récupération des matchs associés (comme équipe à domicile ou à l'extérieur)
-            matches = Match.objects.filter(home_team=team) | Match.objects.filter(away_team=team)
-            matches = matches.order_by('-date')  # Trier par date décroissante
-        except Team.DoesNotExist:
-            # Si aucune équipe n'est trouvée, on laisse `team` à None
-            team = None
-
-    context = {
+    return render(request, 'equipes.html', {
         'team': team,
         'matches': matches,
-        'search_query': team_name,
-        'error': f"Aucune équipe trouvée pour '{team_name}'." if not team and team_name else None,
-    }
-    return render(request, 'equipes.html', context)
-
+        'search_query': search_query,
+        'filter_type': filter_type,
+    })
 
 # Vue pour l'inscription
 def signup_view(request):
@@ -209,29 +128,3 @@ def remove_favorite(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     request.user.profile.favorites.remove(team)
     return redirect('ranking')
-
-def quizz_view(request):
-    questions = get_questions()
-    return render(request, 'quizz.html', {'questions': questions})
-
-def corrigerQuizz_view(request):
-    if request.method == "POST":
-        questions = get_questions()
-        score = 0
-        corrections = []
-        
-        for i, question in enumerate(questions):
-            user_answer = int(request.POST.get(f"question_{i+1}", -1))
-            is_correct = user_answer == question["correct_choice"]
-            if is_correct:
-                score += 1
-            corrections.append({
-                "question_text": question["question_text"],
-                "user_answer": question["choices"][user_answer] if user_answer >= 0 else "Non répondu",
-                "correct_answer": question["choices"][question["correct_choice"]],
-                "is_correct": is_correct,
-            })
-        
-        return render(request, 'resultat.html', {'score': score, 'corrections': corrections})
-
-    return redirect('quizz_view')

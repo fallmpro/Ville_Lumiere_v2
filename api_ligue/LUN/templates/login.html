@@ -5,21 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
-    <header>
-        <div class="logo">Football Info</div>
-    </header>
 
+    <!-- Formulaire de Connexion -->
     <div class="login-form">
         <h1>Connexion</h1>
+
+        <!-- Messages de confirmation/erreur -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Formulaire de Connexion -->
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn_login">Se connecter</button>
+            <button type="submit" class="btn">Se connecter</button>
         </form>
+
         <p>Pas encore de compte ? <a href="{% url 'signup' %}">Créer un compte</a></p>
     </div>
+
+
+
 </body>
 </html>

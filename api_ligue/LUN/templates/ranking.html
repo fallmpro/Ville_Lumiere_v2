@@ -2,53 +2,53 @@
 <html lang="fr">
     {% load static %}
     <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classement</title>
-    <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
-</head>
-<body>
-    {% include 'header.html' %}
-    <h1>Classement</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Position</th>
-                <th>Équipe</th>
-                <th>Points</th>
-                <th>Différence de Buts</th>
-                <th>Favori</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for rank in rankings %}
-            <tr>
-                <td>{{ rank.position }}</td>
-                <td>{{ rank.team.name }}</td>
-                <td>{{ rank.points }}</td>
-                <td>{{ rank.goal_difference }}</td>
-                <td>
-                    {% if user.is_authenticated %}
-                        {% if rank.team in user.profile.favorites.all %}
-                        <!-- Retirer des favoris -->
-                        <form method="post" action="{% url 'remove_favorite' rank.team.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-remove">Retirer</button>
-                        </form>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Classement</title>
+        <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        <h1>Classement</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Équipe</th>
+                    <th>Points</th>
+                    <th>Différence de Buts</th>
+                    <th>Favori</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rank in rankings %}
+                <tr>
+                    <td>{{ rank.position }}</td>
+                    <td>{{ rank.team.name }}</td>
+                    <td>{{ rank.points }}</td>
+                    <td>{{ rank.goal_difference }}</td>
+                    <td>
+                        {% if user.is_authenticated %}
+                            {% if rank.team in user.profile.favorites.all %}
+                            <!-- Retirer des favoris -->
+                            <form method="post" action="{% url 'remove_favorite' rank.team.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-remove">Retirer</button>
+                            </form>
+                            {% else %}
+                            <!-- Ajouter aux favoris -->
+                            <form method="post" action="{% url 'add_favorite' rank.team.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-add">Ajouter</button>
+                            </form>
+                            {% endif %}
                         {% else %}
-                        <!-- Ajouter aux favoris -->
-                        <form method="post" action="{% url 'add_favorite' rank.team.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-add">Ajouter</button>
-                        </form>
+                            <p><a href="{% url 'login' %}">Se connecter</a> pour ajouter aux favoris</p>
                         {% endif %}
-                    {% else %}
-                        <p><a href="{% url 'login' %}">Se connecter</a> pour ajouter aux favoris</p>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
 </html>

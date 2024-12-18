@@ -59,3 +59,27 @@ body {
     margin-right: 10px;
   }
   
+
+  .btn:hover {
+    transform: scale(1.05);
+}
+
+/* Bouton Ajouter aux favoris */
+.btn-add {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #0056b3;
+}
+
+/* Bouton Retirer des favoris */
+.btn-remove {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-remove:hover {
+    background-color: #c82333;
+}

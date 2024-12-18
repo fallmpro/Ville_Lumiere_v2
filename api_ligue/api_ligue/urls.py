@@ -23,7 +23,7 @@ from LUN import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('football-results/', views.get_football_results, name='football_results'),
+    path('football-results/', views.football_results, name='football_results'),
     path('teams/', views.equipe_detail, name='equipe_detail'),
     path('matches/', views.matches_view, name='matches'),
     path('ranking/', views.ranking_view, name='ranking'),
@@ -33,8 +33,6 @@ urlpatterns = [
     path('ranking/', views.ranking_view, name='ranking'),
     path('add-favorite/<int:team_id>/', views.add_favorite, name='add_favorite'),
     path('remove-favorite/<int:team_id>/', views.remove_favorite, name='remove_favorite'),
-    path('quizz/', views.quizz_view, name='quizz'),
-    path('corrigerQuizz/', views.corrigerQuizz_view, name='corriger_quizz'),
 ]
 
 
