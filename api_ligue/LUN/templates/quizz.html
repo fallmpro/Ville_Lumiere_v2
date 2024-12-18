@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz</title>
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>Quizz sur la ligue 1</h1>
+    <span>Connais-tu vraiment la ligue 1 ? Découvre ça et fait le quizz en cliquant sur démarrer</span>
+    <button type="submit" class="btn">Démarrer</button>

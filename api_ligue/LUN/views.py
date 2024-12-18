@@ -165,8 +165,6 @@ def equipe_detail(request):
     return render(request, 'equipes.html', context)
 
 
-
-
 # Vue pour l'inscription
 def signup_view(request):
     if request.method == "POST":
