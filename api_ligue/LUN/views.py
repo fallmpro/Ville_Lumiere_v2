@@ -6,6 +6,7 @@ from django.shortcuts import render , redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Team, Match, Ranking
 from .forms import SignUpForm
+from .questions import get_questions
 from django.contrib import messages
 import requests
 
@@ -208,3 +209,29 @@ def remove_favorite(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     request.user.profile.favorites.remove(team)
     return redirect('ranking')
+
+def quizz_view(request):
+    questions = get_questions()
+    return render(request, 'quizz.html', {'questions': questions})
+
+def corrigerQuizz_view(request):
+    if request.method == "POST":
+        questions = get_questions()
+        score = 0
+        corrections = []
+        
+        for i, question in enumerate(questions):
+            user_answer = int(request.POST.get(f"question_{i+1}", -1))
+            is_correct = user_answer == question["correct_choice"]
+            if is_correct:
+                score += 1
+            corrections.append({
+                "question_text": question["question_text"],
+                "user_answer": question["choices"][user_answer] if user_answer >= 0 else "Non répondu",
+                "correct_answer": question["choices"][question["correct_choice"]],
+                "is_correct": is_correct,
+            })
+        
+        return render(request, 'resultat.html', {'score': score, 'corrections': corrections})
+
+    return redirect('quizz_view')

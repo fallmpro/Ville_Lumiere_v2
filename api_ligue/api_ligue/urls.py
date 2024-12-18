@@ -33,5 +33,8 @@ urlpatterns = [
     path('ranking/', views.ranking_view, name='ranking'),
     path('add-favorite/<int:team_id>/', views.add_favorite, name='add_favorite'),
     path('remove-favorite/<int:team_id>/', views.remove_favorite, name='remove_favorite'),
+    path('quizz/', views.quizz_view, name='quizz'),
+    path('corrigerQuizz/', views.corrigerQuizz_view, name='corriger_quizz'),
 ]
+
 
