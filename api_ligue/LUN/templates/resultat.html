@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat du quizz</title>
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
+</head>
+<body>
+    <h1>Résultats du Quizz</h1>
+    <p>Votre score : {{ score }} / 10</p>
+    <ul>
+        {% for correction in corrections %}
+        <li>
+            <strong>{{ correction.question_text }}</strong><br>
+            Votre réponse : {{ correction.user_answer }}<br>
+            Réponse correcte : {{ correction.correct_answer }}<br>
+            {% if correction.is_correct %}
+            <span style="color: green;">Correct</span>
+            {% else %}
+            <span style="color: red;">Incorrect</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'quizz_voir' %}">Recommencer le quizz</a>
+</body>
+</html>

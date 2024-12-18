@@ -10,6 +10,7 @@ from django.db.models import Q
 from datetime import timedelta
 from .models import Team, Match, Ranking
 from .forms import SignUpForm
+from django.contrib import messages
 import requests
 
 
@@ -128,10 +129,3 @@ def remove_favorite(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     request.user.profile.favorites.remove(team)
     return redirect('ranking')
-
-
-def quizz(request):
-    """
-    Mathys modifie
-    """
-    return render(request, 'quizz.html', {'message': 'Le quizz arrive bientôt !'})
