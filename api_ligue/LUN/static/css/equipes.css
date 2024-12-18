@@ -21,14 +21,16 @@ body {
   padding: 20px;
 }
 
-/* Barre de recherche */
+/* Style du formulaire de recherche et filtre */
 .search-bar {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
+  margin: 20px auto;
+  gap: 10px; /* Espacement entre les éléments */
 }
 
-#search-input {
+.search-bar input[type="text"] {
   width: 300px;
   padding: 10px;
   font-size: 16px;
@@ -37,7 +39,16 @@ body {
   outline: none;
 }
 
-#search-button {
+.search-bar select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.search-bar button {
   padding: 10px 15px;
   font-size: 16px;
   color: white;
@@ -48,9 +59,11 @@ body {
   transition: background-color 0.3s ease;
 }
 
-#search-button:hover {
+.search-bar button:hover {
   background-color: #405ecb;
 }
+
+
 
 /* Section de l'équipe */
 h1 {
@@ -106,5 +119,21 @@ table tr:hover {
 
   table, table th, table td {
     font-size: 14px;
+  }
+  
+  .search-bar {
+      flex-direction: column;
+      gap: 8px;
+  }
+
+  .search-bar input[type="text"],
+  .search-bar select,
+  .search-bar button {
+      width: 100%;
+      border-radius: 5px;
+  }
+
+  .search-bar button {
+      margin-top: 5px;
   }
 }

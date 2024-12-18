@@ -140,31 +140,28 @@ def get_players(request):
         return HttpResponse("Erreur lors de la récupération des joueurs.", status=500)
 
 def equipe_detail(request):
-    # Récupération de l'équipe recherchée depuis le paramètre GET
-    team_name = request.GET.get('nom', None)
-    team = None
-    matches = None
+    search_query = request.GET.get('nom', '')
+    filter_type = request.GET.get('filter', 'all')  # Par défaut, "all"
+    team = Team.objects.filter(name__icontains=search_query).first() if search_query else None
+    matches = []
 
-    if team_name:
-        try:
-            # Recherche de l'équipe dans la base de données (recherche insensible à la casse)
-            team = Team.objects.get(name__icontains=team_name)
+    if search_query:
+        team = Team.objects.filter(name__icontains=search_query).first()
+        if team:
+            if filter_type == 'home':
+                matches = Match.objects.filter(home_team=team).order_by('-date')[:10]
+            elif filter_type == 'away':
+                matches = Match.objects.filter(away_team=team).order_by('-date')[:10]
+            else:  # 'all'
+                matches = Match.objects.filter(home_team=team) | Match.objects.filter(away_team=team)
+                matches = matches.order_by('-date')[:10]
 
-            # Récupération des matchs associés (comme équipe à domicile ou à l'extérieur)
-            matches = Match.objects.filter(home_team=team) | Match.objects.filter(away_team=team)
-            matches = matches.order_by('-date')  # Trier par date décroissante
-        except Team.DoesNotExist:
-            # Si aucune équipe n'est trouvée, on laisse `team` à None
-            team = None
-
-    context = {
+    return render(request, 'equipes.html', {
         'team': team,
         'matches': matches,
-        'search_query': team_name,
-        'error': f"Aucune équipe trouvée pour '{team_name}'." if not team and team_name else None,
-    }
-    return render(request, 'equipes.html', context)
-
+        'search_query': search_query,
+        'filter_type': filter_type,
+    })
 
 # Vue pour l'inscription
 def signup_view(request):
@@ -208,3 +205,10 @@ def remove_favorite(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     request.user.profile.favorites.remove(team)
     return redirect('ranking')
+
+
+def quizz(request):
+    """
+    Mathys modifie
+    """
+    return render(request, 'quizz.html', {'message': 'Le quizz arrive bientôt !'})

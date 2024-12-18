@@ -14,13 +14,20 @@
             <!-- Barre de recherche -->
             <form method="get" action="{% url 'equipe_detail' %}" class="search-bar">
                 <input id="search-input" type="text" name="nom" placeholder="Recherchez une équipe..." value="{{ search_query|default:'' }}">
+                
+                <select name="filter" id="filter-select">
+                    <option value="all" {% if filter_type == 'all' %}selected{% endif %}>Tous</option>
+                    <option value="home" {% if filter_type == 'home' %}selected{% endif %}>Domicile</option>
+                    <option value="away" {% if filter_type == 'away' %}selected{% endif %}>Extérieur</option>
+                </select>
+                
                 <button id="search-button" type="submit">Rechercher</button>
             </form>
 
             {% if team %}
                 <h1>Équipe : {{ team.name }}</h1>
                 <div class="results">
-                    <h2>Résultats récents :</h2>
+                    <h2>10 Derniers Résultats :</h2>
                     <table>
                         <thead>
                             <tr>
@@ -30,11 +37,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for match in matches|slice:":10" %}
+                            {% for match in matches %}
                                 <tr>
                                     <td>{{ match.date }}</td>
                                     <td>
-                                        {% if match.home_team == team %}
+                                        {% if filter_type == 'home' or match.home_team == team %}
                                             {{ match.away_team.name }}
                                         {% else %}
                                             {{ match.home_team.name }}
@@ -56,7 +63,7 @@
                         </tbody>
                     </table>
                 </div>
-                {% else %}
+            {% else %}
                 <p style="text-align: center;">Veuillez rechercher une équipe pour afficher ses résultats récents.</p>
             {% endif %}
         </div>
