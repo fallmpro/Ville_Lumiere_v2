@@ -1,5 +1,9 @@
 # Consignes Projet API
 
+Fichier .md crée par Dylan Guichard, il a été récupéré depuis blackbord : 
+https://esiee-it.blackboard.com/ultra/courses/_115227_1/outline
+
+
 Projet par groupe (3 ou 4)
 
 ## Lexique
