@@ -17,26 +17,28 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_recent_matches(self):
+        return Match.objects.filter(home_team=self) | Match.objects.filter(away_team=self)
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    favorites = models.ManyToManyField(Team, blank=True, related_name='favorited_by')
+
+    def __str__(self):
+        return f"Profil de {self.user.username}"
+
+
+@receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
-    def get_recent_matches(self):
-        return Match.objects.filter(home_team=self) | Match.objects.filter(away_team=self)
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    favorites = models.ManyToManyField('Team', blank=True, related_name='favorited_by')
-
-    def __str__(self):
-        return f"Profil de {self.user.username}"
-
+    if hasattr(instance, 'profile'):
+        instance.profile.save()
 
 # Table pour les joueurs
 class Player(models.Model):
